@@ -1,6 +1,4 @@
-import { DESTROY_EVENT } from './constants/events.const';
 import { WidgetTypeEnum } from './enums/widget-type-enum';
-import { BaseWidget } from './model/abstract-base-widget.class';
 import { RawData } from './model/widget.interface';
 import { TableWidget } from './widget-types';
 export type AddWidgetConfig = {
