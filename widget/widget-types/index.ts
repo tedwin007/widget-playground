@@ -1,7 +1,7 @@
 import { WidgetTypeEnum } from '../enums/widget-type-enum';
 import { BaseWidget } from '../model/abstract-base-widget.class';
 import { RawData } from '../model/widget.interface';
-import { TableWidgetAdopter } from './table-widget-adopter.class';
+import { TableWidgetAdopter } from './table-widget-adaptor.class';
 
 export class TableWidget<ITableWidget> extends BaseWidget<ITableWidget> {
   constructor(
