@@ -9,10 +9,10 @@ export abstract class BaseWidget<WDT = any> implements IWidget<WDT> {
   abstract adoptor: WidgetAdaptor;
   abstract template(data: WDT): string;
   constructor(data: RawData, type: WidgetTypeEnum, adoptor: WidgetAdaptor) {
-    this.setId(type);
     if (!adoptor.isValid(type, data)) {
       throw new Error('Invalid data to type' + type);
     }
+    this.setId(type);
     this.data = adoptor.adapt(data);
   }
 
@@ -30,7 +30,7 @@ export abstract class BaseWidget<WDT = any> implements IWidget<WDT> {
     };
   }
 
-  private setId(type: WidgetTypeEnum) {
+  private setId(type: WidgetTypeEnum): void {
     this.id = Date.now() + Math.random().toPrecision(1) + 1 + '_' + type;
   }
 }
