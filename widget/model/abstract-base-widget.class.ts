@@ -9,7 +9,7 @@ export abstract class BaseWidget<WDT = any> implements IWidget<WDT> {
   abstract adoptor: WidgetAdaptor;
   abstract template(data: WDT): string;
   constructor(data: RawData, type: WidgetTypeEnum, adoptor: WidgetAdaptor) {
-    this.id = Date.now() + '_' + type;
+    this.id = Date.now() + Math.random().toPrecision(1) + 1 + '_' + type;
     if (!adoptor.isValid(type, data)) {
       throw new Error('Invalid data to type' + type);
     }

@@ -12,6 +12,8 @@ export class TableWidget<ITableWidget> extends BaseWidget<ITableWidget> {
   }
 
   template(data: ITableWidget): string {
-    return `<p>Hi THis is the data ${JSON.stringify(data)}</p>.`;
+    return `<p class="${this.id}">Hi THis is the data ${JSON.stringify(
+      data
+    )}</p>.`;
   }
 }

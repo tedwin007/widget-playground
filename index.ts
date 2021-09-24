@@ -7,15 +7,29 @@ const widgetManger = new WidgetMangerService();
 
 const destroyListRef = widgetManger.addWidgetsList([
   {
-    data: 123,
+    data: 'sdfsdfsdf',
     type: WidgetTypeEnum.table,
     container: document.querySelector('#app'),
   },
   {
-    data: {},
+    data: '<p>sdf</p>',
     type: WidgetTypeEnum.table,
     container: document.querySelector('#app'),
   },
 ]);
 
-setTimeout(() => destroyListRef.forEach((item) => item()), 1500);
+setTimeout(() => {
+  destroyListRef.forEach((item) => item());
+  widgetManger.addWidgetsList([
+    {
+      data: 1,
+      type: WidgetTypeEnum.table,
+      container: document.querySelector('#app'),
+    },
+    {
+      data: 2,
+      type: WidgetTypeEnum.table,
+      container: document.querySelector('#app'),
+    },
+  ]);
+}, 1000);

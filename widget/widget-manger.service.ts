@@ -17,6 +17,12 @@ export class WidgetMangerService<T = any> {
     });
   }
 
+  removeWidget(widgetId: string) {}
+
+  getWidgetById(widgetId: string) {}
+
+  getWidgetsByType(widgetType: WidgetTypeEnum) {}
+
   fetchData(id: string, config?: Request): Promise<T> {
     return new Promise((resolve, reject) => {
       resolve(<any>{ data: (Math.random() + 1).toString() });
