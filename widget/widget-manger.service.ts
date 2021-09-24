@@ -1,4 +1,5 @@
 import { WidgetTypeEnum } from './enums/widget-type-enum';
+import { BaseWidget } from './model/abstract-base-widget.class';
 import { RawData } from './model/widget.interface';
 import { TableWidget } from './widget-types';
 export type AddWidgetConfig = {
@@ -8,21 +9,32 @@ export type AddWidgetConfig = {
 };
 
 export class WidgetMangerService<T = any> {
-  widgets = [];
+  widgets = new Map<string, BaseWidget>();
   data: T = <any>{ data: (Math.random() + 1).toString() };
 
   constructor() {
-    this.fetchData('').then((res: T) => {
-      this.data = res;
-    });
+    this.fetchData('').then((res: T) => (this.data = res));
   }
 
-  removeWidget(widgetId: string) {}
+  getAllWidgets(): BaseWidget[] {
+    return Array.from(this.widgets.values());
+  }
 
-  getWidgetById(widgetId: string) {}
+  getWidgetById(widgetId: string): BaseWidget {
+    return this.widgets.get(widgetId);
+  }
 
-  getWidgetsByType(widgetType: WidgetTypeEnum) {}
+  getWidgetsByType(widgetType: WidgetTypeEnum) {
+    return this.getAllWidgets().filter((item) => item.type === widgetType);
+  }
 
+  removeWidget(widgetId: string) {
+    this.widgets.delete(widgetId);
+  }
+
+  /**
+   * Mocking
+   */
   fetchData(id: string, config?: Request): Promise<T> {
     return new Promise((resolve, reject) => {
       resolve(<any>{ data: (Math.random() + 1).toString() });
@@ -32,8 +44,8 @@ export class WidgetMangerService<T = any> {
   addSingleWidget(config: AddWidgetConfig): Function {
     switch (config.type) {
       case WidgetTypeEnum.table:
-        const widg = new TableWidget(config.data ?? this.data);
-        this.widgets.push(widg);
+        const widg: BaseWidget = new TableWidget(config.data ?? this.data);
+        this.widgets.set(widg.id, widg);
         return widg.render(config.container);
       default:
         console.log('unknown type');

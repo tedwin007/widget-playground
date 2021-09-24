@@ -5,10 +5,13 @@ import { IWidget, RawData } from './widget.interface';
 export abstract class BaseWidget<WDT = any> implements IWidget<WDT> {
   id: string;
   data: WDT;
+  type: WidgetTypeEnum;
 
   abstract adoptor: WidgetAdaptor;
   abstract template(data: WDT): string;
+
   constructor(data: RawData, type: WidgetTypeEnum, adoptor: WidgetAdaptor) {
+    this.type = type;
     if (!adoptor.isValid(type, data)) {
       throw new Error('Invalid data to type' + type);
     }
@@ -22,7 +25,7 @@ export abstract class BaseWidget<WDT = any> implements IWidget<WDT> {
     return this.destroy(container);
   }
 
-  destroy(parent: HTMLBaseElement): Function {
+  private destroy(parent: HTMLBaseElement): Function {
     const container = parent;
     return function () {
       container.innerHTML = '';

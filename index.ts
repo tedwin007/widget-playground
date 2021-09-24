@@ -18,6 +18,8 @@ const destroyListRef = widgetManger.addWidgetsList([
   },
 ]);
 
+console.log(widgetManger.getWidgetsByType(WidgetTypeEnum.table));
+
 setTimeout(() => {
   destroyListRef.forEach((item) => item());
   widgetManger.addWidgetsList([
