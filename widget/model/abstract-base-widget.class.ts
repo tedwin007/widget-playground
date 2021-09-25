@@ -1,5 +1,6 @@
+import { Utils } from '../../utils';
 import { WidgetTypeEnum } from '../enums/widget-type-enum';
-import { WidgetAdaptor } from './abstract-widget-adapter.class';
+import { WidgetAdapter } from './abstract-widget-adapter.class';
 import { IWidget, RawData } from './widget.interface';
 
 export abstract class BaseWidget<WDT = any> implements IWidget<WDT> {
@@ -7,11 +8,17 @@ export abstract class BaseWidget<WDT = any> implements IWidget<WDT> {
   data: WDT;
   type: WidgetTypeEnum;
   htmlContainerElement: HTMLBaseElement;
+  abstract htmlTemplate: (data: WDT) => string;
+  abstract adoptor: WidgetAdapter;
 
-  abstract adoptor: WidgetAdaptor;
-  abstract template(data: WDT): string;
+  template(data: WDT): string {
+    // sanitize not implamented, see comments in the utils file
+    return Utils.sanitize(
+      `<div class="${this.id} widget">${this.htmlTemplate(data)}</div>.`
+    );
+  }
 
-  constructor(data: RawData, type: WidgetTypeEnum, adoptor: WidgetAdaptor) {
+  constructor(data: RawData, type: WidgetTypeEnum, adoptor: WidgetAdapter) {
     this.type = type;
     if (!adoptor.isValid(type, data)) {
       throw new Error('Invalid data to type' + type);
