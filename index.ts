@@ -18,27 +18,11 @@ const destroyListRef = widgetManger.addWidgetsList([
   },
 ]);
 
-const id = widgetManger.getAllWidgets()[0].id;
+// getting some widget id for test
+let id = widgetManger.getAllWidgets()[0].id;
+// getting all widget with a specific type
 console.log(widgetManger.getWidgetsByType(WidgetTypeEnum.table));
-
+// destroying all widgets views the
+setTimeout(() => destroyListRef.forEach((item) => item()), 1000);
 // data Change
-setTimeout(() => {
-  widgetManger.dataChange(id, '1s after change was made');
-}, 1000);
-
-//
-setTimeout(() => {
-  destroyListRef.forEach((item) => item());
-  widgetManger.addWidgetsList([
-    {
-      data: 1,
-      type: WidgetTypeEnum.table,
-      container: document.querySelector('#app'),
-    },
-    {
-      data: 2,
-      type: WidgetTypeEnum.table,
-      container: document.querySelector('#app'),
-    },
-  ]);
-}, 1000);
+setTimeout(() => widgetManger.dataChange(id, '2s after change was made'), 2000);
