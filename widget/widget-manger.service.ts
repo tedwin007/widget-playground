@@ -50,7 +50,7 @@ export class WidgetMangerService<T = any> {
   }
 
   /**
-   * Mocking
+   * Mocking HTTP request
    */
   fetchData(id: string, config?: Request): Promise<T> {
     return new Promise((resolve, reject) => {
