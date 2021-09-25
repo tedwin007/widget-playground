@@ -34,6 +34,12 @@ export abstract class BaseWidget<WDT = any> implements IWidget<WDT> {
     return this.destroy(container);
   }
 
+  /**
+   * Destroy
+   * will remove the view from the dom
+   * !note: controller stays in-memory (will be remove from memory be the widgetManger)
+   * can be extended to "unsubscribe" from "onDataCange" event
+   */
   private destroy(parent: HTMLBaseElement): Function {
     const container = parent;
     return function () {
