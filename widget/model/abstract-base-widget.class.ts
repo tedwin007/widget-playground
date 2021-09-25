@@ -6,6 +6,7 @@ export abstract class BaseWidget<WDT = any> implements IWidget<WDT> {
   id: string;
   data: WDT;
   type: WidgetTypeEnum;
+  htmlContainerElement: HTMLBaseElement;
 
   abstract adoptor: WidgetAdaptor;
   abstract template(data: WDT): string;
@@ -22,6 +23,7 @@ export abstract class BaseWidget<WDT = any> implements IWidget<WDT> {
   render(container: HTMLBaseElement): Function {
     const template = this.template(this.data);
     container.insertAdjacentHTML('afterbegin', `${template}`);
+    this.htmlContainerElement = container;
     return this.destroy(container);
   }
 

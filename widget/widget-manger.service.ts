@@ -2,6 +2,7 @@ import { WidgetTypeEnum } from './enums/widget-type-enum';
 import { BaseWidget } from './model/abstract-base-widget.class';
 import { RawData } from './model/widget.interface';
 import { TableWidget } from './widget-types';
+
 export type AddWidgetConfig = {
   data?: RawData;
   type: WidgetTypeEnum;
@@ -28,8 +29,24 @@ export class WidgetMangerService<T = any> {
     return this.getAllWidgets().filter((item) => item.type === widgetType);
   }
 
-  removeWidget(widgetId: string) {
-    this.widgets.delete(widgetId);
+  removeWidget(widgetId: string): boolean {
+    return this.widgets.delete(widgetId);
+  }
+
+  /**
+   * Data change
+   * this will be trigered automaticlly when queryParams changes will be detected
+   * queryParams changes will triger fetch event that will get entity data and will "re-render" all widget
+   * * rerender = completely deleting the widget (view + controller) and creating a new (same type diffrent data) widget
+   */
+  dataChange(widgetId: string, data: T): Function {
+    const { htmlContainerElement }: BaseWidget = this.getWidgetById(widgetId);
+    this.removeWidget(widgetId);
+    return this.addSingleWidget({
+      data,
+      type: WidgetTypeEnum.table,
+      container: htmlContainerElement,
+    });
   }
 
   /**
